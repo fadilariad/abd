@@ -9,6 +9,8 @@ const ProductSchema: Schema = new Schema<IProductData>({
     cost: {type: Number, required: true},
     delivery: {type: Number, required: true},
     deleted: {type: Boolean, required: true},
+    price: {type: Number, required: false, default: 0},
+    inStock: {type: Number, required: false, default: 0},
 });
 
 ProductSchema.set('toJSON', {

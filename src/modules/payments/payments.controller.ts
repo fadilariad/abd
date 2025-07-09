@@ -11,6 +11,14 @@ class PaymentsController extends BaseController {
      this.handleError(res, 'Failed to add payments');
    }
   }
+  async deletePayment(_req: Request, res: Response) {
+   try {
+       await PaymentsService.deletePayment(_req.params.id);
+       this.handleSuccess(res, 'Payment deleted');
+   }catch(error) {
+     this.handleError(res, 'Failed to add payments');
+   }
+  }
 
 }
 

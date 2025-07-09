@@ -1,7 +1,7 @@
 import mongoose, {Schema} from 'mongoose';
 import {IPayment} from "./payments.interface";
 
-interface IPaymentModal extends IPayment {
+export interface IPaymentModal extends IPayment {
     createdDate: Date;
 }
 const PaymentSchema: Schema = new Schema<IPaymentModal>({
@@ -10,6 +10,8 @@ const PaymentSchema: Schema = new Schema<IPaymentModal>({
     note: {type: String, required: false},
     date: {type: Date, required: true},
     createdDate: {type: Date, required: true},
+    clientId: {type: String, required: false},
+    clientName: {type: String, required: false},
 });
 
 export default mongoose.model<IPaymentModal>('Payment', PaymentSchema);

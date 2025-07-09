@@ -15,7 +15,7 @@ class ProductService {
     return await Product.findById(id)
   }
 
-  async updateProduct(id: string, updates: { cost?: number; delivery?: number }): Promise<IProduct | null> {
+  async updateProduct(id: string, updates: IProduct): Promise<IProduct | null> {
     return await Product.findByIdAndUpdate(id, updates, { new: true });
   }
   async deleteProduct(id: string): Promise<IProduct | null> {

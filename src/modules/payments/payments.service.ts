@@ -1,6 +1,5 @@
 import {IPayment} from "./payments.interface";
-import Payment from "./payments.model";
-import {ISale} from "../sales/sales.interface";
+import Payment, {IPaymentModal} from "./payments.model";
 
 class PaymentsService {
   async addPayments(payments: IPayment[]): Promise<IPayment[]> {
@@ -14,6 +13,14 @@ class PaymentsService {
         $lte: toDate,
       },
     });
+  }
+
+  async getClientPayments(clientId: string): Promise<IPaymentModal[]> {
+    return  Payment.find({clientId})
+  }
+
+  async deletePayment(paymentId: string) {
+    await Payment.deleteOne({_id: paymentId});
   }
 }
 

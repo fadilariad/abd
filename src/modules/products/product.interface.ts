@@ -3,4 +3,6 @@ export interface IProduct {
     name: string
     cost: number;
     delivery: number;
+    price?: number;
+    inStock?: number;
 }

@@ -17,6 +17,8 @@ class ReportService {
     const gas = expenses.filter(ex => ex.type === ExpensesType.GAS)
     const home = expenses.filter(ex => ex.type === ExpensesType.HOME);
     const others = expenses.filter(ex => ex.type === ExpensesType.OTHERS);
+    const supplier = expenses.filter(ex => ex.type === ExpensesType.SUPPLIER);
+    const deliveryPay = expenses.filter(ex => ex.type === ExpensesType.DELIVERY);
     const salesHeaders = ['quantity', 'cost', 'name', 'date'];
     const paymentsHeaders = ['amount', 'note', 'date'];
 
@@ -29,6 +31,16 @@ class ReportService {
       gas: {
         total: gas.reduce((sum, ex) => sum + ex.amount, 0),
         data: gas.map(ex => ({value: ex.amount, note: ex.note, date: ex.date})),
+        headers: paymentsHeaders
+      },
+      supplier: {
+        total: supplier.reduce((sum, ex) => sum + ex.amount, 0),
+        data: supplier.map(ex => ({value: ex.amount, note: ex.note, date: ex.date})),
+        headers: paymentsHeaders
+      },
+      deliveryPay: {
+        total: deliveryPay.reduce((sum, ex) => sum + ex.amount, 0),
+        data: deliveryPay.map(ex => ({value: ex.amount, note: ex.note, date: ex.date})),
         headers: paymentsHeaders
       },
       others: {
@@ -65,7 +77,7 @@ class ReportService {
         total: sales.reduce((sum, sale) => sum + (sale.delivery * sale.quantity), 0),
         data: sales.map(sale => ({value: sale.quantity, note: `${sale.name}`, date: sale.date, value2: sale.delivery})),
         headers: salesHeaders
-      }
+      },
     }
   }
 }

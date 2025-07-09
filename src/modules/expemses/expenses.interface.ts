@@ -9,4 +9,6 @@ export enum ExpensesType {
     GAS = 1,
     HOME,
     OTHERS,
+    SUPPLIER,
+    DELIVERY
 }

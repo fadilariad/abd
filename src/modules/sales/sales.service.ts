@@ -14,6 +14,17 @@ class SalesService {
             },
         });
     }
+    async getClientSales(clientId: string): Promise<ISale[]> {
+        return await Sales.find({clientId});
+    }
+
+    async deleteSale(id: string) {
+        await Sales.deleteOne({_id: id});
+    }
+
+    async updateSale(id: string, sale: {price: number, quantity: number}) {
+        return await Sales.findByIdAndUpdate(id, sale, {new: true});
+    }
 }
 
 export default new SalesService();

@@ -3,6 +3,8 @@ export interface IPayment {
     amount: number;
     note: string;
     date: Date;
+    clientId?: string;
+    clientName?: string;
 }
 
 export enum EPaymentType {
