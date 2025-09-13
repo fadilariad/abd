@@ -24,6 +24,11 @@ class ReportService {
 
     return {
       sales: {
+        total: sales.reduce((sum, sale) => sum + ((sale.price || 0) * sale.quantity), 0),
+        data: sales.map(sale => ({value: sale.quantity, note: `${sale.name}`, date: sale.date, value2: sale.price})),
+        headers: salesHeaders
+      },
+      supplier: {
         total: sales.reduce((sum, sale) => sum + (sale.cost * sale.quantity), 0),
         data: sales.map(sale => ({value: sale.quantity, note: `${sale.name}`, date: sale.date, value2: sale.cost})),
         headers: salesHeaders
@@ -33,7 +38,7 @@ class ReportService {
         data: gas.map(ex => ({value: ex.amount, note: ex.note, date: ex.date})),
         headers: paymentsHeaders
       },
-      supplier: {
+      supplierPay: {
         total: supplier.reduce((sum, ex) => sum + ex.amount, 0),
         data: supplier.map(ex => ({value: ex.amount, note: ex.note, date: ex.date})),
         headers: paymentsHeaders

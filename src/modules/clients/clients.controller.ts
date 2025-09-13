@@ -48,6 +48,14 @@ class ClientsController extends BaseController {
           this.handleError(res, 'Failed to get client history');
         }
     }
+    async getClientsHistory(_req: Request, res: Response) {
+        try {
+            const data = await ClientsService.getClientsHistory();
+            this.handleSuccess(res, data);
+        } catch (error) {
+          this.handleError(res, 'Failed to get clients history');
+        }
+    }
 }
 
 export default new ClientsController();

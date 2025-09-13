@@ -8,6 +8,7 @@ import {IPaymentModal} from "../payments/payments.model";
 
 class ClientService {
 
+
     async getAll(): Promise<IClient[]> {
         return await Client.find({active: true});
     }
@@ -31,7 +32,14 @@ class ClientService {
     async deleteClient(id: string): Promise<IClient | null> {
         return Client.findByIdAndUpdate(id, {active: false}, {new: false})
     }
-
+    async getClientsHistory(): Promise<(IClient & {total: number, history: (GroupedData<IPaymentModal> | GroupedData<ISale>)[]})[]> {
+        const clients = await Client.find({active: true}).lean();
+        const clientsHistory = Promise.all(clients.map(async client => {
+            const history = await this.getClientHistory(client._id.toString());
+            return {...client, history, total: history.reduce((acc, cur) => cur.type === 1 ? acc - cur.total : acc + cur.total, 0)};
+        }));
+        return clientsHistory;
+    }
 }
 
 export default new ClientService();
