@@ -21,6 +21,18 @@ class ProductService {
   async deleteProduct(id: string): Promise<IProduct | null> {
     return Product.findByIdAndUpdate(id, {deleted: true}, {new: false})
   }
+  async updateProductStock(products: {id: string, quantity: number}[]): Promise<void> {
+      if (!products.length) return;
+
+      const bulkOps = products.map((item) => ({
+          updateOne: {
+              filter: { _id: item.id },
+              update: { $inc: { inStock: -item.quantity } },
+          },
+      }));
+
+      await Product.bulkWrite(bulkOps);
+  }
 }
 
 export default new ProductService();

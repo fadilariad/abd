@@ -1,9 +1,12 @@
-import {ISale} from "./sales.interface";
+import {IAddSale, ISale} from "./sales.interface";
 import Sales from "./sales.model";
+import ProductService from "../products/product.service";
 
 class SalesService {
-    async addSales(sales: ISale[]): Promise<ISale[]> {
-        return await Sales.insertMany(sales);
+    async addSales(sales: IAddSale[]): Promise<ISale[]> {
+        const newSales = await Sales.insertMany(sales);
+        const updateStock = await ProductService.updateProductStock(sales.map(s => ({id: s.id, quantity: s.quantity})))
+        return newSales;
     }
 
     async getSalesByDateRange(fromDate: Date, toDate: Date): Promise<ISale[]> {
@@ -24,6 +27,10 @@ class SalesService {
 
     async updateSale(id: string, sale: {price: number, quantity: number}) {
         return await Sales.findByIdAndUpdate(id, sale, {new: true});
+    }
+
+    async convertOrderToInvoice(order: string, invoice: string) {
+        await Sales.updateMany({invoice: order}, {invoice: invoice})
     }
 }
 
