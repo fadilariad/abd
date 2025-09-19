@@ -8,6 +8,7 @@ class SalesController extends BaseController {
             const newProduct = await SalesService.addSales(_req.body?.sales);
             this.handleSuccess(res, newProduct);
         } catch (error) {
+            console.log(error);
             this.handleError(res, 'Failed to add product');
         }
     }
@@ -24,6 +25,14 @@ class SalesController extends BaseController {
     async updateSale(_req: Request, res: Response) {
         try {
             const sale = await SalesService.updateSale(_req.params?.id, _req.body);
+            this.handleSuccess(res, sale);
+        } catch (error) {
+            this.handleError(res, 'Failed to update sale');
+        }
+    }
+    async convertOrderToInvoice(_req: Request, res: Response) {
+        try {
+            const sale = await SalesService.convertOrderToInvoice(_req.params?.order, _req.params?.invoice);
             this.handleSuccess(res, sale);
         } catch (error) {
             this.handleError(res, 'Failed to update sale');

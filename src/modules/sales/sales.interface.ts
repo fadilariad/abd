@@ -9,3 +9,12 @@ export interface ISale {
     price?: number;
     invoice: string;
 }
+
+export interface IAddSale extends ISale {
+    id: string;
+}
+
+export interface IConvertOrderToInvoicePayload {
+    order: string;
+    invoice: string;
+}
