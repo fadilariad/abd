@@ -11,9 +11,9 @@ class ReportController extends BaseController {
       }
       const fromDate = new Date(from as string);
       const toDate =  new Date(to as string);
-      fromDate.setHours(0, 0, 0, 0);
-      toDate.setHours(23, 59, 59, 999);
-
+      fromDate.setUTCHours(0, 0, 0, 0);
+      toDate.setUTCHours(23, 59, 59, 999);
+      console.log(fromDate, toDate);
       const report = await reportService.getReport(fromDate, toDate);
       this.handleSuccess(res, report);
     } catch (error) {
